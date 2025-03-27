@@ -1,3 +1,4 @@
+import os
 
 class separador_silaba:
     consonantes = ["b", "c", "d", "f", "g", "h", "j", "k", "l", "m", "n", "ñ", "p", "q", "r", "s", "t", "v", "w", "x", "y", "z"] #!
@@ -6,9 +7,17 @@ class separador_silaba:
     vocales_abiertas = ["a","e","o","á","é","ó"] #4
     vocales_cerradas = ["i","u"] #5
     vocales_cerradas_tilde = ["í","ú"] #6
-    diptongo = ["ai","au","ei","eu","ia","ie","io","iu","oi","ou","ua","ue","ui","uo"] #7
-    hiato = ["aa","aá","áa","ae","áe","aé","aí","ao","áo","aó","aú","ea","éa","eá","ee","ée","eé","eí","eo","éo","eó","eú",
-             "ía","ié","íu","oa","óa","oá","oe","óe","oé","oí","oo","óo","oó","oú","úa","úe","úo"] #8
+    diptongo = ["ai","ái","au","áu",
+                "ei","éi","eu","éu",
+                "ia","iá","ié","ie","io","ió","iu","iú",
+                "oi","ói","ou","óu",
+                "ua","uá","ue","ué","uo","uó","úi","ui"] #7
+    hiato = [
+    "aa", "aá", "áa", "ae", "aé", "áe", "aí", "ao", "aó", "áo", "aú",
+    "ea", "éa", "eá", "ee", "ée", "eé", "eí", "eo", "éo", "eó", "eú",
+    "ía", "íe", "ío",
+    "oa", "óa", "oá", "oe", "óe", "oé", "oí", "oo", "óo", "oó", "oú",
+    "úa", "úe", "úo"]#8
     
     def __init__(self,word):
         self.word = word.lower()
@@ -93,94 +102,113 @@ class separador_silaba:
 
     def separar_silabas(self):
         self.silabas = []
-        primeros_elementos = [x[0] for x in self.tipo_de_letra]
-        segundos_elementos = [x[1] for x in self.tipo_de_letra] 
-        vocal_cons_vocal = {414,415,416,514,515,516,614,615,616}                              #conso + vocal + conso + conso + diptongo
-        cons_vocal_cons_cons_vocal = {14114,14115,14116,15114,15115,15116,16114,16115,16616,            14117,15117,16117}
-        cons_dipton_cons_vocal = {1714,1715,1716,  1724,1725,1726} 
-        inseparable_vocal_conson = {241,251,261}
-        vocal_cons_cons_insepara = {4112,5112,6112}                             #vocal + cons + cons + diptongo         #vocal + cons + inseparable + vocal        #vocal + cons + inseparable + diptongo
-        vocal_cons_cons_vocal = {4114,4115,4115,5114,5115,5116,6114,6115,6116,         4117,5117,6117,               4124,4125,4126,5124,5125,5126,6124,6125,6126,          4127,5127,6127 }
+        primeros_elementos = [x[0] for x in self.tipo_de_letra] #Letras
+        segundos_elementos = [x[1] for x in self.tipo_de_letra] #Numeros
+        #V = Vocal
+        #C = Consonante
+        #D = Diptongo
+        #H = Hiato
+        #I = Inseparable
 
-                                                                               #conso + vocal + conso + diptongo   #conso + diptongo + conso + vocal
-        cons_vocal_cons_vocal = {1414,1415,1416,1514,1515,1516,1614,1615,1616,         1417,1517,1617,                  2714,2715,2716 }
-        cons_hiato_hiato_cons = {1841,1851,1861}
-        cons_vocal_cons_cons_inseparable = {14112,15113,16114}
+        una_letra_dos_caracteres = {84,85,86,88}
+                                                #V + C + V                      #V + C + D                  #V + I + V                #V + C + H
+        una_letra_tres_caracteres = {414,415,416,514,515,516,614,615,616,      417,517,617,     424,425,426,524,525,526,624,625,626,  418,518,618,  714,715,716  }      
+
+
+                                    #I + H + V              #C + H + V      #I + V + I
+        dos_letra_tres_caracteres = {284,285,286,           184,185,186,    242,252,262}
+
+                                                     #V + C + C + V                        #V + C + C + D                    #V + C + I + V
+        dos_letras_cuatro_caracteres = {4114,4115,4115,5114,5115,5116,6114,6115,6116,     4117,5117,6117,     4124,4125,4126,5124,5125,5126,6124,6125,6126,     
+                      
+        #V + C + I + D                  #C + V + C + V                         #C + V + C + D       #I + D + C + V    #I + D + C + C      #C + D + C + V          
+        4127,5127,6127,    1414,1415,1416,1514,1515,1516,1614,1615,1616,      1417,1517,1617,       2714,2715,2716,    1714,1715,1716,   
+                      
+        #C + D + I + V    #C + H + V + C    #C + H + V + I     #C + V + I + D                    #C + V + I + V                                  #I + V + C + V                    #I + V + C + D     #I + V + C + H
+        1724,1725,1726,   1841,1851,1861,   1842,1852,1862,    1427,1527,1627,      1424,1425,1426,1524,1525,1526,1624,1625,1626,   1428,1528,1628,
+
+                      #I + V + C + V                     #I + V + C + D     #I + V + C + H    #C + V + C + H
+        2414,2415,2416,2514,2515,2516,2614,2615,2616,    2417,2517,2617,    2418,2518,2518,   1418,1518,1618}
+        
+
+                                       #I + V + C       
+        tres_letras_tres_caracteres = {2410,2510,2610    }
+
+                                         #V + C + C + I    #C + D + C + C     #C + V + C + I    #I + D + C + C
+        tres_letras_cuatro_caracteres = {4112,5112,6112,        1711,         1412,1512,1612,        2711}
+
+                                                         #C + V + C + C + V                      #C + V + C + C + D 
+        tres_letras_cinco_caracteres = {14114,14115,14116,15114,15115,15116,16114,16115,16616,    14117,15117,16117,  24114,24115,24116,25114,25115,25116,26114,26115,26116,  24117,25117,26117,     24118,25118,26118}
+
+                                            #C + V + C + C + I
+        cuatro_letras_cinco_caracteres =  {14112,15112,16112, 14112,15112,15112, 24111,25111,26111, 24112,25112,26112, 14111,15111,16111} 
 
         count = 0
         while len(segundos_elementos) > 0:
 
-            #vocal + consonante + vocal
-            if len(segundos_elementos) >= 3 and int(str(segundos_elementos[0]) + str(segundos_elementos[1]) + str(segundos_elementos[2])) in vocal_cons_vocal:
+            
+            #3 letras 5 Caracteres
+            if len(segundos_elementos) >= 5 and int(str(segundos_elementos[0]) + str(segundos_elementos[1]) + str(segundos_elementos[2]) + str(segundos_elementos[3]) + str(segundos_elementos[4])) in tres_letras_cinco_caracteres:
+                self.silabas.append(primeros_elementos[0]+primeros_elementos[1]+primeros_elementos[2])
+                del segundos_elementos[0:3]
+                del primeros_elementos[0:3]        
+            
+            #4 letras 5 Caracteres
+            elif len(segundos_elementos) >= 5 and int(str(segundos_elementos[0]) + str(segundos_elementos[1]) + str(segundos_elementos[2])+ str(segundos_elementos[3])+ str(segundos_elementos[4])) in cuatro_letras_cinco_caracteres:
+                self.silabas.append(primeros_elementos[0]+primeros_elementos[1]+primeros_elementos[2]+primeros_elementos[3])
+                del primeros_elementos[0:4]
+                del segundos_elementos[0:4]
+
+            #2 letras 4 Caracteres
+            elif len(segundos_elementos) >= 4 and int(str(segundos_elementos[0]) + str(segundos_elementos[1]) + str(segundos_elementos[2]) + str(segundos_elementos[3])) in dos_letras_cuatro_caracteres:
+                self.silabas.append(primeros_elementos[0] + primeros_elementos[1])
+                del primeros_elementos[0:2]
+                del segundos_elementos[0:2]
+    
+            #3 letras 4 Carecteres
+            elif len(segundos_elementos) >= 4 and int(str(segundos_elementos[0]) + str(segundos_elementos[1]) + str(segundos_elementos[2])+ str(segundos_elementos[3])) in tres_letras_cuatro_caracteres:
+                self.silabas.append(primeros_elementos[0]+primeros_elementos[1]+primeros_elementos[2])
+                del segundos_elementos[0:3]
+                del primeros_elementos[0:3]
+            
+
+            #1 Letra 3 Caracteres
+            elif len(segundos_elementos) >= 3 and int(str(segundos_elementos[0]) + str(segundos_elementos[1]) + str(segundos_elementos[2])) in una_letra_tres_caracteres:
                 self.silabas.append(primeros_elementos[0])
                 del segundos_elementos[0:1]
                 del primeros_elementos[0:1]
             
-            #consonante + vocal + consonante + consonante + vocal
-            elif len(segundos_elementos) >= 5 and int(str(segundos_elementos[0]) + str(segundos_elementos[1]) + str(segundos_elementos[2]) + str(segundos_elementos[3])+str(segundos_elementos[4])) in cons_vocal_cons_cons_vocal:
-                self.silabas.append(primeros_elementos[0]+primeros_elementos[1]+primeros_elementos[2])
-                del segundos_elementos[0:3]
-                del primeros_elementos[0:3]
-            
-            #vocal + consonante + consonante + inseparable 
-            elif len(segundos_elementos) >= 4 and int(str(segundos_elementos[0]) + str(segundos_elementos[1]) + str(segundos_elementos[2]) + str(segundos_elementos[3])) in vocal_cons_cons_insepara:
-                self.silabas.append(primeros_elementos[0]+primeros_elementos[1]+primeros_elementos[2])
-                del primeros_elementos[0:3]
-                del segundos_elementos[0:3]
-
-            #inseparable + vocal + consonante
-            elif len(segundos_elementos) >= 3 and int(str(segundos_elementos[0]) + str(segundos_elementos[1]) + str(segundos_elementos[2])) in inseparable_vocal_conson:
-                self.silabas.append(primeros_elementos[0]+primeros_elementos[1]+primeros_elementos[2])
-                del primeros_elementos[0:3]
-                del segundos_elementos[0:3]
-
-            #vocal + constante + constante + vocal
-            elif len(segundos_elementos) >= 4 and int(str(segundos_elementos[0]) + str(segundos_elementos[1]) + str(segundos_elementos[2]) + str(segundos_elementos[3])) in vocal_cons_cons_vocal:
-                self.silabas.append(primeros_elementos[0] + primeros_elementos[1])
-                del primeros_elementos[0:2]
-                del segundos_elementos[0:2]
-
-            #consonante + vocal + consonante + vocal
-            elif len(segundos_elementos) >= 4 and int(str(segundos_elementos[0]) + str(segundos_elementos[1]) + str(segundos_elementos[2]) + str(segundos_elementos[3])) in cons_vocal_cons_vocal:
+            #2 letras 3 Caracteres
+            elif len(segundos_elementos) >= 3 and int(str(segundos_elementos[0]) + str(segundos_elementos[1]) + str(segundos_elementos[2])) in dos_letra_tres_caracteres:
                 self.silabas.append(primeros_elementos[0] + primeros_elementos[1])
                 del primeros_elementos[0:2]
                 del segundos_elementos[0:2]
             
-            #consonante + diptongo + consonante + vocal
-            elif len(segundos_elementos) >= 4 and int(str(segundos_elementos[0]) + str(segundos_elementos[1]) + str(segundos_elementos[2]) + str(segundos_elementos[3])) in cons_dipton_cons_vocal:
-                self.silabas.append(primeros_elementos[0]+primeros_elementos[1])
-                del primeros_elementos[0:2]
-                del segundos_elementos[0:2]
-            
-            #consonante + hiato + hiato + consonante
-            elif len(segundos_elementos) >= 4 and int(str(segundos_elementos[0]) + str(segundos_elementos[1]) + str(segundos_elementos[2])+ str(segundos_elementos[3])) in cons_hiato_hiato_cons:
+            #3 letras 3 Caracteres
+            elif len(segundos_elementos) >= 3 and int(str(segundos_elementos[0]) + str(segundos_elementos[1]) + str(segundos_elementos[2])) in tres_letras_tres_caracteres:
+                self.silabas.append(primeros_elementos[0]+primeros_elementos[1]+primeros_elementos[2])
+                del segundos_elementos[0:3]
+                del primeros_elementos[0:3]
 
-                self.silabas.append(primeros_elementos[0]+primeros_elementos[1])
-                print(primeros_elementos)
-                del primeros_elementos[0:2]
-                del segundos_elementos[0:2]
-                print(primeros_elementos)
-            
-            #consonante + vocal + consonante + consonante + inseparable
-            elif len(segundos_elementos) >= 5 and int(str(segundos_elementos[0]) + str(segundos_elementos[1]) + str(segundos_elementos[2])+ str(segundos_elementos[3])+ str(segundos_elementos[4])) in cons_vocal_cons_cons_inseparable:
-                self.silabas.append(primeros_elementos[0]+primeros_elementos[1]+primeros_elementos[2]+primeros_elementos[3])
-                print(primeros_elementos)
-                del primeros_elementos[0:4]
-                del segundos_elementos[0:4]
-                print(primeros_elementos)
+            #1 letras 2 caracteres
+            elif len(segundos_elementos) >= 2 and int(str(segundos_elementos[0]) + str(segundos_elementos[1])) in una_letra_dos_caracteres:
+                self.silabas.append(primeros_elementos[0])
+                del segundos_elementos[0:1]
+                del primeros_elementos[0:1]
 
-        
             count += 1
-            if count > 40:
+            if count > len(self.word):
                 self.silabas.append("".join(primeros_elementos))
                 break
 
 
-
-prueba = separador_silaba("incluido")
-prueba.main()
-print(prueba.tipo_de_letra)
-prueba.separar_silabas()
-print(prueba.silabas)
-                
-                
+while True:
+    prueba = separador_silaba(input("Ingrese su palabra en español y sin triptongos: "))
+    prueba.main()
+    print("                                      ")
+    print(prueba.tipo_de_letra)
+    prueba.separar_silabas()
+    print("-".join(prueba.silabas))
+    if input("Quiere terminar ya? Y/N: ") == "Y":
+        break
+    os.system("cls")
