@@ -1,17 +1,6 @@
 # Proyectos-simples
 Proyectos de baja complejidad y alcance limitado, enfocados en resolver tareas simples sin requerir un desarrollo extenso ni algoritmos avanzados.
 
-////////////////////////////////////////////////////////////
-
-Primer projecto: Separador de silabas
-Este projecto cuenta con una estructura de 2 partes:
-  1. Identifica Vocales,Consonantes,Consonantes inseparables,Diptongos e Hiatos y las agrega en una lista de tuplas que contienen cada letra de la palabra inputeada junto con el numero unico (dependiendo del tipo de letra) 
-  2. Calculadora de codigos: Toma estos codigos y si esta en alguno de los diccionarios que contienen la combinacion de codigos unicos que juntos dividen las letras de en distintas longitudes, divide las tuplas en dos **listas de Letras** y **Lista de codigos** unicos (pertenecientes a la palabra inputeada) y finalmente toma codigo de letra por codigo de letra, las junta en cierta cantidad de caracteres y evalua si se encuentran en los diccionarios, si cumple todas las condiciones una silaba es creada y agregada a la lista silabas, y los codigos unicos de las letras de la palabra inputeada utilizados para agregarlos a la lista silabas son eliminadas de la **lista de Letras** y la **Lista de codigos**. El proceso se repite en un bucle, evaluando cada sílaba hasta recorrer completamente la palabra
-
-El projecto lo use para cubrir la mayoria de palabras, seguramente una que otra palabra con hiato o diptongo se me paso, de ser asi puedes escribir la palabra, juntar los codigos unicos y agregarlo correspondientemente en el diccionario asignado dependiendo de la cantidad de caracteres que necesitan ser evaluados para separar la silaba y el numero de letras contadas por el cual la silaba se rompera o separara de la palabra.
-/////////////////////////////////////////////////////////////
-
-
 **Version Chatgpt**
 
 # Separador de Sílabas en Español
@@ -56,4 +45,16 @@ Si quieres mejorar el algoritmo, puedes enviar un pull request o abrir un issue 
 
 ## Licencia
 Este proyecto está disponible bajo la licencia MIT.
+
+**Mi Explicacion**:
+
+
+Primer projecto: Separador de silabas
+
+Partes:
+  1. Identifica Vocales,Consonantes,Consonantes inseparables,Diptongos e Hiatos y las agrega en una lista de tuplas que contienen cada letra de la palabra inputeada junto con el numero unico (dependiendo del tipo de letra) 
+  2. Calculadora de codigos: Toma estos codigos y si esta en alguno de los diccionarios que contienen la combinacion de codigos unicos que juntos dividen las letras de en distintas longitudes, divide las tuplas en dos **listas de Letras** y **Lista de codigos** unicos (pertenecientes a la palabra inputeada) y finalmente toma codigo de letra por codigo de letra, las junta en cierta cantidad de caracteres y evalua si se encuentran en los diccionarios, si cumple todas las condiciones una silaba es creada y agregada a la lista silabas, y los codigos unicos de las letras de la palabra inputeada utilizados para agregarlos a la lista silabas son eliminadas de la **lista de Letras** y la **Lista de codigos**. El proceso se repite en un bucle, evaluando cada sílaba hasta recorrer completamente la palabra
+
+Posibles problemas:
+El projecto lo use para cubrir la mayoria de palabras, seguramente una que otra palabra con hiato o diptongo se me paso, de ser asi puedes escribir la palabra, juntar los codigos unicos y agregarlo correspondientemente en el diccionario asignado dependiendo de la cantidad de caracteres que necesitan ser evaluados para separar la silaba y el numero de letras contadas por el cual la silaba se rompera o separara de la palabra.
 
