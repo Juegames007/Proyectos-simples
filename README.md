@@ -2,6 +2,7 @@
 Proyectos de baja complejidad y alcance limitado, enfocados en resolver tareas simples sin requerir un desarrollo extenso ni algoritmos avanzados.
 
 ////////////////////////////////////////////////////////////
+
 Primer projecto: Separador de silabas
 Este projecto cuenta con una estructura de 2 partes:
   1. Identifica Vocales,Consonantes,Consonantes inseparables,Diptongos e Hiatos y las agrega en una lista de tuplas que contienen cada letra de la palabra inputeada junto con el numero unico (dependiendo del tipo de letra) 
@@ -9,6 +10,7 @@ Este projecto cuenta con una estructura de 2 partes:
 
 El projecto lo use para cubrir la mayoria de palabras, seguramente una que otra palabra con hiato o diptongo se me paso, de ser asi puedes escribir la palabra, juntar los codigos unicos y agregarlo correspondientemente en el diccionario asignado dependiendo de la cantidad de caracteres que necesitan ser evaluados para separar la silaba y el numero de letras contadas por el cual la silaba se rompera o separara de la palabra.
 /////////////////////////////////////////////////////////////
+
 
 **Version Chatgpt**
 
